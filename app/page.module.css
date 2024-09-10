@@ -163,3 +163,68 @@ a.secondary {
     filter: invert();
   }
 }
+
+.page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 0 2rem;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.logo {
+  margin-bottom: 1.5rem;
+}
+
+.slogan {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.description {
+  font-size: 1.2rem;
+  color: #555;
+  margin-bottom: 2rem;
+  max-width: 600px;
+}
+
+.ctas {
+  display: flex;
+  gap: 1rem;
+}
+
+.primary {
+  background-color: #0070f3;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+.secondary {
+  background-color: transparent;
+  color: #0070f3;
+  padding: 0.75rem 1.5rem;
+  border: 2px solid #0070f3;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+.primary:hover, .secondary:hover {
+  opacity: 0.8;
+}
+
+.footer {
+  margin-top: 3rem;
+  text-align: center;
+  color: #888;
+}
