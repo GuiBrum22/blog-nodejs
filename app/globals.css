@@ -40,3 +40,15 @@ a {
     color-scheme: dark;
   }
 }
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+h1 {
+    color: #2c3e50;
+}

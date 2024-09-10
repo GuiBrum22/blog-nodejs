@@ -1,30 +1,30 @@
-# Escopo do Projeto: Blog de Temas Gerais
+# Talk Blog
 
-## Objetivo Principal SMART
+## Sobre o Projeto
+
+Bem-vindo ao Talk Blog – o espaço onde a conversa se transforma em conexão. Somos apaixonados por criar um ambiente vibrante e inclusivo onde ideias podem florescer e discussões se aprofundar. No Talk Blog, acreditamos que a comunicação é a chave para o entendimento e a evolução.
+
+Nosso objetivo é criar um ponto de encontro digital para curiosos, pensadores e apaixonados por debates construtivos. Queremos ser mais do que apenas um blog; queremos ser uma comunidade onde cada voz tem espaço e cada perspectiva é valorizada.
+
+## Objetivo do Projeto
 
 **Objetivo:** Desenvolvimento e Lançamento da Plataforma
 
-- **Específico:** Criar uma plataforma de blog completa que permita aos usuários se cadastrar, criar e editar postagens, avaliar postagens (curtidas e descurtidas) e gerenciar seus perfis.
+- **Específico:** Criar uma plataforma de blog interativa e responsiva onde os usuários possam se cadastrar, criar e editar postagens, avaliar postagens (curtidas e descurtidas) e gerenciar seus perfis.
 - **Mensurável:** A plataforma deve incluir pelo menos 5 páginas principais (home, perfil, postagens, busca e configurações) e ter todas as funcionalidades operacionais.
 - **Atingível:** Com uma equipe técnica qualificada e uso de tecnologias adequadas, o desenvolvimento pode ser realizado dentro do prazo estabelecido.
 - **Relevante:** Este objetivo é essencial para fornecer uma base sólida e funcional para o blog, permitindo que todas as outras funcionalidades sejam implementadas e utilizadas.
 - **Temporal:** Concluir o desenvolvimento e lançar a plataforma em 3 meses, com a primeira versão pronta para testes em 8 semanas e o lançamento final 1 semana após a conclusão dos testes.
 
-## Escopo do Projeto
+## Funcionalidades
 
-### 1. Introdução
+- Cadastro e Login de Usuários
+- Criação e Edição de Postagens
+- Sistema de Avaliação
+- Gerenciamento de Perfil
+- Busca e Navegação
 
-O projeto visa desenvolver uma plataforma de blog interativa e responsiva. Os usuários poderão se cadastrar, criar e gerenciar postagens sobre diversos temas, avaliar postagens de outros usuários e gerenciar seus próprios perfis.
-
-### 2. Funcionalidades Principais
-
-- **Cadastro e Login de Usuários:** Permitir que usuários se registrem e façam login na plataforma.
-- **Criação e Edição de Postagens:** Usuários poderão criar novas postagens, editá-las e visualizá-las.
-- **Sistema de Avaliação:** Funcionalidade de curtidas e descurtidas em postagens.
-- **Gerenciamento de Perfil:** Permitir que os usuários visualizem e editem suas informações pessoais e visualizem seu histórico de postagens.
-- **Busca e Navegação:** Implementar uma funcionalidade de busca e filtros para encontrar postagens.
-
-### 3. Cronograma
+## Cronograma
 
 - **Fase de Planejamento (2 semanas)**
   - Definição de requisitos
@@ -46,7 +46,7 @@ O projeto visa desenvolver uma plataforma de blog interativa e responsiva. Os us
   - Preparação para o lançamento
   - Lançamento final da plataforma
 
-### 4. Análise de Risco
+## Análise de Risco
 
 - **Risco: Atrasos no Desenvolvimento**
   - **Probabilidade:** Média
@@ -68,7 +68,7 @@ O projeto visa desenvolver uma plataforma de blog interativa e responsiva. Os us
   - **Impacto:** Médio
   - **Mitigação:** Implementar um sistema de feedback e ajustes contínuos baseado nas sugestões dos usuários.
 
-### 5. Recursos
+## Recursos
 
 - **Equipe de Desenvolvimento**
   - Desenvolvedores frontend e backend
@@ -85,9 +85,17 @@ O projeto visa desenvolver uma plataforma de blog interativa e responsiva. Os us
   - **Marketing e Divulgação:** Orçamento para campanhas de marketing digital
   - **Ferramentas de Gestão:** Software de gerenciamento de projetos (Microsoft Project, Trello)
 
----
-DIAGRAMA DE CLASSE 
+## Identidade Visual
 
+- **Nome da Marca:** TALK BLOG
+- **Slogan:** “Discussões Que Valem a Pena”
+- **Fontes:** Poppins – Google Fonts (https://fonts.google.com/specimen/Poppins)
+
+## Diagramas
+
+### Diagrama de Classe
+
+```mermaid
 classDiagram
     class Usuario {
         +int id
@@ -132,9 +140,9 @@ classDiagram
     Usuario "1" -- "0..*" Avaliacao : faz >
     Usuario "1" -- "1" Perfil : tem >
 
-DIAGRAMA DE USO
+### Diagrama de Uso
 
-flowchart TD
+'''flowchart TD
     A[Início] --> B{Tipo de Ação}
 
     B -->|Usuário| C[Cadastrar]
@@ -155,16 +163,24 @@ flowchart TD
     I --> K
     J --> K
 
-DIAGRAMA DE FLUXO 
-flowchart TD
+### Diagrama de Fluxo
+
+'''flowchart TD
     A[Início] --> B{Usuário logado?}
     B -- Sim --> C[Buscar Postagens]
     B -- Não --> D[Login]
     D --> E[Cadastrar ou Login]
     E --> C
     C --> F[Selecionar Postagem]
-    F --> G[Editar ou Deletar Postagem]
-    G --> H[Fim]
+    F --> G{Deseja editar ou deletar?}
+    G -- Editar --> H[Editar Postagem]
+    G -- Deletar --> I[Deletar Postagem]
+    H --> J[Fim]
+    I --> J
 
-    B --> I[Sair]
-    I --> H
+    C --> K[Avaliar Postagem]
+    K --> J
+
+    B --> L[Sair]
+    L --> J
+
