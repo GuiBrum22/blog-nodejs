@@ -1,4 +1,4 @@
-import Task from '@/models/Task';
+import Task from '@/models/Post';
 import connectMongo from '@/utils/dbConnect';
 
 export const getTodos = async (req, res) => {

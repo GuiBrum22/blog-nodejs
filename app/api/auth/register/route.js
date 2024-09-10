@@ -3,12 +3,14 @@ import connectMongo from "@/utils/dbConnect";
 import { NextResponse } from "next/server";
 
 export async function POST(request) {
-    const data = await request.json();
-    await connectMongo();
-    try {
-        const user = await User.create(data);
-        return NextResponse.json({ success: true, data: user });
-    } catch (error) {
-        return NextResponse.json({ success: false, error }, { status: 400 });
-    }
+  const { username, email, password } = await request.json();
+  await connectMongo();
+  
+  try {
+    const user = new User({ username, email, password });
+    await user.save();
+    return NextResponse.json({ message: 'Usuário registrado com sucesso!' });
+  } catch (error) {
+    return NextResponse.json({ error: 'Erro ao registrar usuário' }, { status: 400 });
+  }
 }
