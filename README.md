@@ -190,4 +190,10 @@ classDiagram
 
 ```
 1. Baixa
-![alt text](Capturar.PNG)
+![alt text](Capturar1.PNG)
+
+2. Média
+![alt text](Capturar2.PNG)
+
+3. Alta
+![alt text](Capturar3.PNG)
