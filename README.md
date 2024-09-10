@@ -91,96 +91,67 @@ Nosso objetivo é criar um ponto de encontro digital para curiosos, pensadores e
 - **Slogan:** “Discussões Que Valem a Pena”
 - **Fontes:** Poppins – Google Fonts (https://fonts.google.com/specimen/Poppins)
 
-## Diagramas
-
-### Diagrama de Classe
+### Diagramas
 
 ```mermaid
+%% Diagrama de Classe
 classDiagram
     class Usuario {
         +int id
         +string nome
         +string email
         +string senha
-        +cadastrar()
         +login()
-        +editarPerfil()
+        +logout()
     }
 
-    class Postagem {
+    class Tarefa {
         +int id
-        +string titulo
-        +string conteudo
-        +int autorId
-        +criar()
-        +editar()
-        +deletar()
-        +avaliar()
-    }
-
-    class Avaliacao {
-        +int id
-        +int postagemId
-        +int usuarioId
-        +string tipo // Curtida ou Descurtida
+        +string descricao
+        +boolean concluida
+        +string categoria
         +adicionar()
-        +remover()
+        +editar()
+        +excluir()
+        +marcarConcluida()
     }
 
-    class Perfil {
-        +int usuarioId
-        +string bio
-        +string foto
-        +atualizarBio()
-        +atualizarFoto()
+    class Categoria {
+        +int id
+        +string nome
+        +adicionar()
+        +editar()
     }
 
-    Usuario "1" -- "0..*" Postagem : cria >
-    Postagem "0..*" -- "1" Avaliacao : recebe >
-    Usuario "1" -- "0..*" Avaliacao : faz >
-    Usuario "1" -- "1" Perfil : tem >
-   ```
-### Diagrama de Uso
+    Usuario "1" -- "0..*" Tarefa : possui >
+    Tarefa "0..*" -- "1" Categoria : pertence >
 
-```mermaid
+%% Diagrama de Uso
 flowchart TD
     A[Início] --> B{Tipo de Ação}
 
-    B -->|Usuário| C[Cadastrar]
-    B -->|Usuário| D[Login]
-    B -->|Usuário| E[Criar Postagem]
-    B -->|Usuário| F[Editar Postagem]
-    B -->|Usuário| G[Deletar Postagem]
-    B -->|Usuário| H[Avaliar Postagem]
-    B -->|Usuário| I[Gerenciar Perfil]
-    B -->|Usuário| J[Buscar Postagens]
+    B -->|Usuário| C[Adicionar Tarefa]
+    B -->|Usuário| D[Editar Tarefa]
+    B -->|Usuário| E[Excluir Tarefa]
+    B -->|Usuário| F[Marcar Tarefa como Concluída]
+    B -->|Usuário| G[Listar Tarefas]
 
-    C --> K[Fim]
-    D --> K
-    E --> K
-    F --> K
-    G --> K
-    H --> K
-    I --> K
-    J --> K
-    ```
-   ### Diagrama de Fluxo
-   ```mermaid
-   flowchart TD
+    C --> H[Fim]
+    D --> H
+    E --> H
+    F --> H
+    G --> H
+
+%% Diagrama de Fluxo
+flowchart TD
     A[Início] --> B{Usuário logado?}
-    B -- Sim --> C[Buscar Postagens]
+    B -- Sim --> C[Buscar Tarefa]
     B -- Não --> D[Login]
-    D --> E[Cadastrar ou Login]
+    D --> E[Procurar Tarefa]
     E --> C
-    C --> F[Selecionar Postagem]
-    F --> G{Deseja editar ou deletar?}
-    G -- Editar --> H[Editar Postagem]
-    G -- Deletar --> I[Deletar Postagem]
-    H --> J[Fim]
-    I --> J
+    C --> F[Selecionar Tarefa]
+    F --> G[Aplicar para Tarefa]
+    G --> H[Fim]
 
-    C --> K[Avaliar Postagem]
-    K --> J
-
-    B --> L[Sair]
-    L --> J
+    B --> I[Saída]
+    I --> H
