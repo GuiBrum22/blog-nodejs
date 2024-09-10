@@ -93,8 +93,11 @@ Nosso objetivo é criar um ponto de encontro digital para curiosos, pensadores e
 
 ### Diagramas
 
+### Diagramas
+
+1. Classe
+
 ```mermaid
-%% Diagrama de Classe
 classDiagram
     class Usuario {
         +int id
@@ -126,8 +129,11 @@ classDiagram
     Usuario "1" -- "0..*" Tarefa : possui >
     Tarefa "0..*" -- "1" Categoria : pertence >
 
-%% Diagrama de Uso
-flowchart TD
+```
+
+  2. Uso
+```mermaid
+  flowchart TD
     A[Início] --> B{Tipo de Ação}
 
     B -->|Usuário| C[Adicionar Tarefa]
@@ -142,7 +148,10 @@ flowchart TD
     F --> H
     G --> H
 
-%% Diagrama de Fluxo
+```
+
+  3. Fluxo
+```mermaid
 flowchart TD
     A[Início] --> B{Usuário logado?}
     B -- Sim --> C[Buscar Tarefa]
@@ -155,3 +164,4 @@ flowchart TD
 
     B --> I[Saída]
     I --> H
+```
