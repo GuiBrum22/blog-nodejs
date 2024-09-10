@@ -1,36 +1,88 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Escopo do Projeto: Blog de Temas Gerais
 
-## Getting Started
+## Objetivo Principal SMART
 
-First, run the development server:
+**Objetivo:** Desenvolvimento e Lançamento da Plataforma
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Específico:** Criar uma plataforma de blog completa que permita aos usuários se cadastrar, criar e editar postagens, avaliar postagens (curtidas e descurtidas) e gerenciar seus perfis.
+- **Mensurável:** A plataforma deve incluir pelo menos 5 páginas principais (home, perfil, postagens, busca e configurações) e ter todas as funcionalidades operacionais.
+- **Atingível:** Com uma equipe técnica qualificada e uso de tecnologias adequadas, o desenvolvimento pode ser realizado dentro do prazo estabelecido.
+- **Relevante:** Este objetivo é essencial para fornecer uma base sólida e funcional para o blog, permitindo que todas as outras funcionalidades sejam implementadas e utilizadas.
+- **Temporal:** Concluir o desenvolvimento e lançar a plataforma em 3 meses, com a primeira versão pronta para testes em 8 semanas e o lançamento final 1 semana após a conclusão dos testes.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Escopo do Projeto
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+### 1. Introdução
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+O projeto visa desenvolver uma plataforma de blog interativa e responsiva. Os usuários poderão se cadastrar, criar e gerenciar postagens sobre diversos temas, avaliar postagens de outros usuários e gerenciar seus próprios perfis.
 
-## Learn More
+### 2. Funcionalidades Principais
 
-To learn more about Next.js, take a look at the following resources:
+- **Cadastro e Login de Usuários:** Permitir que usuários se registrem e façam login na plataforma.
+- **Criação e Edição de Postagens:** Usuários poderão criar novas postagens, editá-las e visualizá-las.
+- **Sistema de Avaliação:** Funcionalidade de curtidas e descurtidas em postagens.
+- **Gerenciamento de Perfil:** Permitir que os usuários visualizem e editem suas informações pessoais e visualizem seu histórico de postagens.
+- **Busca e Navegação:** Implementar uma funcionalidade de busca e filtros para encontrar postagens.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 3. Cronograma
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Fase de Planejamento (2 semanas)**
+  - Definição de requisitos
+  - Planejamento do projeto
 
-## Deploy on Vercel
+- **Fase de Design (3 semanas)**
+  - Criação de wireframes e protótipos
+  - Revisão e aprovação do design
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Fase de Desenvolvimento (8 semanas)**
+  - Implementação do backend e frontend
+  - Desenvolvimento de funcionalidades principais
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Fase de Testes (2 semanas)**
+  - Testes funcionais e de usabilidade
+  - Correção de bugs
+
+- **Fase de Lançamento (1 semana)**
+  - Preparação para o lançamento
+  - Lançamento final da plataforma
+
+### 4. Análise de Risco
+
+- **Risco: Atrasos no Desenvolvimento**
+  - **Probabilidade:** Média
+  - **Impacto:** Alto
+  - **Mitigação:** Estabelecer marcos claros e revisões semanais do progresso.
+
+- **Risco: Problemas Técnicos e Bugs**
+  - **Probabilidade:** Média
+  - **Impacto:** Médio
+  - **Mitigação:** Realizar testes extensivos e ter uma equipe de suporte pronta para resolver problemas rapidamente.
+
+- **Risco: Falta de Recursos**
+  - **Probabilidade:** Baixa
+  - **Impacto:** Médio
+  - **Mitigação:** Garantir uma alocação adequada de recursos e ter um plano de contingência.
+
+- **Risco: Feedback Negativo Inicial**
+  - **Probabilidade:** Média
+  - **Impacto:** Médio
+  - **Mitigação:** Implementar um sistema de feedback e ajustes contínuos baseado nas sugestões dos usuários.
+
+### 5. Recursos
+
+- **Equipe de Desenvolvimento**
+  - Desenvolvedores frontend e backend
+  - Designer de UI/UX
+  - Especialista em segurança
+
+- **Tecnologias e Ferramentas**
+  - **Backend:** Python/Django ou Node.js
+  - **Frontend:** React.js ou Angular
+  - **Banco de Dados:** MySQL, PostgreSQL ou MongoDB
+  - **Infraestrutura:** Servidores para hospedagem (AWS, Google Cloud, etc.)
+
+- **Recursos Adicionais**
+  - **Marketing e Divulgação:** Orçamento para campanhas de marketing digital
+  - **Ferramentas de Gestão:** Software de gerenciamento de projetos (Microsoft Project, Trello)
+
+---
