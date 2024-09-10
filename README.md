@@ -140,8 +140,10 @@ classDiagram
     Usuario "1" -- "0..*" Avaliacao : faz >
     Usuario "1" -- "1" Perfil : tem >
    ```
-### Diagrama de Uso         
-    flowchart TD
+### Diagrama de Uso
+
+```mermaid
+flowchart TD
     A[Início] --> B{Tipo de Ação}
 
     B -->|Usuário| C[Cadastrar]
@@ -161,10 +163,10 @@ classDiagram
     H --> K
     I --> K
     J --> K
-``
-
-### Diagrama de Fluxo
-    flowchart TD
+    ```
+   ### Diagrama de Fluxo
+   ```mermaid
+   flowchart TD
     A[Início] --> B{Usuário logado?}
     B -- Sim --> C[Buscar Postagens]
     B -- Não --> D[Login]
@@ -182,5 +184,3 @@ classDiagram
 
     B --> L[Sair]
     L --> J
-
-
