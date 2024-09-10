@@ -93,8 +93,6 @@ Nosso objetivo é criar um ponto de encontro digital para curiosos, pensadores e
 
 ### Diagramas
 
-### Diagramas
-
 1. Classe
 
 ```mermaid
