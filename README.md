@@ -86,3 +86,85 @@ O projeto visa desenvolver uma plataforma de blog interativa e responsiva. Os us
   - **Ferramentas de Gestão:** Software de gerenciamento de projetos (Microsoft Project, Trello)
 
 ---
+DIAGRAMA DE CLASSE 
+
+classDiagram
+    class Usuario {
+        +int id
+        +string nome
+        +string email
+        +string senha
+        +cadastrar()
+        +login()
+        +editarPerfil()
+    }
+
+    class Postagem {
+        +int id
+        +string titulo
+        +string conteudo
+        +int autorId
+        +criar()
+        +editar()
+        +deletar()
+        +avaliar()
+    }
+
+    class Avaliacao {
+        +int id
+        +int postagemId
+        +int usuarioId
+        +string tipo // Curtida ou Descurtida
+        +adicionar()
+        +remover()
+    }
+
+    class Perfil {
+        +int usuarioId
+        +string bio
+        +string foto
+        +atualizarBio()
+        +atualizarFoto()
+    }
+
+    Usuario "1" -- "0..*" Postagem : cria >
+    Postagem "0..*" -- "1" Avaliacao : recebe >
+    Usuario "1" -- "0..*" Avaliacao : faz >
+    Usuario "1" -- "1" Perfil : tem >
+
+DIAGRAMA DE USO
+
+flowchart TD
+    A[Início] --> B{Tipo de Ação}
+
+    B -->|Usuário| C[Cadastrar]
+    B -->|Usuário| D[Login]
+    B -->|Usuário| E[Criar Postagem]
+    B -->|Usuário| F[Editar Postagem]
+    B -->|Usuário| G[Deletar Postagem]
+    B -->|Usuário| H[Avaliar Postagem]
+    B -->|Usuário| I[Gerenciar Perfil]
+    B -->|Usuário| J[Buscar Postagens]
+
+    C --> K[Fim]
+    D --> K
+    E --> K
+    F --> K
+    G --> K
+    H --> K
+    I --> K
+    J --> K
+
+DIAGRAMA DE FLUXO 
+flowchart TD
+    A[Início] --> B{Usuário logado?}
+    B -- Sim --> C[Buscar Postagens]
+    B -- Não --> D[Login]
+    D --> E[Cadastrar ou Login]
+    E --> C
+    C --> F[Selecionar Postagem]
+    F --> G[Editar ou Deletar Postagem]
+    G --> H[Fim]
+
+    B --> I[Sair]
+    I --> H
