@@ -108,26 +108,38 @@ classDiagram
         +logout()
     }
 
-    class Tarefa {
+    class Postagem {
         +int id
-        +string descricao
-        +boolean concluida
-        +string categoria
-        +adicionar()
+        +string titulo
+        +string conteudo
+        +int autorId
+        +criar()
         +editar()
-        +excluir()
-        +marcarConcluida()
+        +deletar()
+        +avaliar()
     }
 
-    class Categoria {
+    class Avaliacao {
         +int id
-        +string nome
+        +int postagemId
+        +int usuarioId
+        +string tipo // Curtida ou Descurtida
         +adicionar()
-        +editar()
+        +remover()
     }
 
-    Usuario "1" -- "0..*" Tarefa : possui >
-    Tarefa "0..*" -- "1" Categoria : pertence >
+    class Perfil {
+        +int usuarioId
+        +string bio
+        +string foto
+        +atualizarBio()
+        +atualizarFoto()
+    }
+
+    Usuario "1" -- "0..*" Postagem : cria >
+    Postagem "0..*" -- "1" Avaliacao : recebe >
+    Usuario "1" -- "0..*" Avaliacao : faz >
+    Usuario "1" -- "1" Perfil : tem >
 
 ```
 
@@ -136,32 +148,46 @@ classDiagram
   flowchart TD
     A[Início] --> B{Tipo de Ação}
 
-    B -->|Usuário| C[Adicionar Tarefa]
-    B -->|Usuário| D[Editar Tarefa]
-    B -->|Usuário| E[Excluir Tarefa]
-    B -->|Usuário| F[Marcar Tarefa como Concluída]
-    B -->|Usuário| G[Listar Tarefas]
+    B -->|Usuário| C[Cadastrar]
+    B -->|Usuário| D[Login]
+    B -->|Usuário| E[Criar Postagem]
+    B -->|Usuário| F[Editar Postagem]
+    B -->|Usuário| G[Deletar Postagem]
+    B -->|Usuário| H[Avaliar Postagem]
+    B -->|Usuário| I[Gerenciar Perfil]
+    B -->|Usuário| J[Buscar Postagens]
 
-    C --> H[Fim]
-    D --> H
-    E --> H
-    F --> H
-    G --> H
+    C --> K[Fim]
+    D --> K
+    E --> K
+    F --> K
+    G --> K
+    H --> K
+    I --> K
+    J --> K
+
 
 ```
 
   3. Fluxo
 ```mermaid
-flowchart TD
+   flowchart TD
     A[Início] --> B{Usuário logado?}
-    B -- Sim --> C[Buscar Tarefa]
+    B -- Sim --> C[Buscar Postagens]
     B -- Não --> D[Login]
-    D --> E[Procurar Tarefa]
+    D --> E[Cadastrar ou Login]
     E --> C
-    C --> F[Selecionar Tarefa]
-    F --> G[Aplicar para Tarefa]
-    G --> H[Fim]
+    C --> F[Selecionar Postagem]
+    F --> G{Deseja editar ou deletar?}
+    G -- Editar --> H[Editar Postagem]
+    G -- Deletar --> I[Deletar Postagem]
+    H --> J[Fim]
+    I --> J
 
-    B --> I[Saída]
-    I --> H
+    C --> K[Avaliar Postagem]
+    K --> J
+
+    B --> L[Sair]
+    L --> J
+
 ```
