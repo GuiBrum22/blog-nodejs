@@ -192,6 +192,4 @@ classDiagram
 
 ```
 1. Baixa
-```
 ![alt text](Capturar.PNG)
-```
