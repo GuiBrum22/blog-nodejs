@@ -189,11 +189,30 @@ classDiagram
     L --> J
 
 ```
-1. Baixa
+### Protótipo(Expectativa)
+1. Baixa(Expectativa):
+
 ![alt text](Capturar1.PNG)
 
-2. Média
-![alt text](Capturar2.PNG)
+2. Média(Expectativa):
 
-3. Alta
-![alt text](Capturar3.PNG)
+![alt text](Capturar5.PNG)
+
+3. Alta(Expectativa):
+
+![alt text](Capturar4.PNG)
+
+
+### Protótipo(Atingível)
+
+1. Baixa(Atingível):
+
+![alt text](Capturar1-1.PNG)
+
+2. Média(Atingível):
+
+![alt text](Capturar7.PNG)
+
+3. Alta(Atingível):
+
+![alt text](Capturar6.PNG)
