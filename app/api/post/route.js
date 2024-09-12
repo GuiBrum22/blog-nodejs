@@ -1,51 +1,68 @@
 import Post from "@/models/Post";
+import User from "@/models/User";
 import connectMongo from "@/utils/dbConnect";
-import { middleware } from "@/utils/middleware";
 import { NextResponse } from "next/server";
+import mongoose from "mongoose";
 
-// Método GET - listar todas as postagens (não precisa de autenticação)
+// Função GET - Listar postagens
 export async function GET(req) {
   await connectMongo();
+
   try {
-    const posts = await Post.find().populate('author', 'username');
+    const posts = await Post.find().populate('author', 'username'); // Popula o autor com o campo username
     return NextResponse.json(posts);
   } catch (error) {
-    return NextResponse.json({ error: 'Erro ao carregar postagens' }, { status: 500 });
+    console.error("Erro ao buscar postagens:", error);
+    return NextResponse.json({ error: 'Erro ao buscar postagens' }, { status: 500 });
   }
 }
 
-// Método POST - criar uma nova postagem (precisa de autenticação)
+// Função POST - Criar nova(s) postagem(ns)
 export async function POST(req) {
-  return middleware (req, async () => {
-    const { title, content } = await req.json();
-    await connectMongo();
+  await connectMongo();
 
-    try {
+  try {
+    const contentType = req.headers.get('content-type');
+    console.log("Content-Type:", contentType);
+
+    if (!contentType || !contentType.includes('application/json')) {
+      return NextResponse.json({ error: 'Content-Type deve ser application/json' }, { status: 400 });
+    }
+
+    const requestBody = await req.json();
+    console.log("Request Body:", requestBody);
+
+    const posts = Array.isArray(requestBody) ? requestBody : [requestBody];
+    const createdPosts = [];
+
+    for (const post of posts) {
+      const { title, content, author } = post;
+
+      if (!title || !content) {
+        return NextResponse.json({ error: 'Título e conteúdo são obrigatórios' }, { status: 400 });
+      }
+
+      // Validar o ID do autor
+      let authorId;
+      if (author && mongoose.Types.ObjectId.isValid(author._id)) {
+        authorId = author._id;
+      } else {
+        authorId = 'default_author_id'; // Substitua com um ObjectId válido, se disponível
+      }
+
       const newPost = new Post({
         title,
         content,
-        author: req.user.userId, // O userId está no token decodificado pelo middleware
+        author: authorId,
       });
+
       await newPost.save();
-      return NextResponse.json(newPost);
-    } catch (error) {
-      return NextResponse.json({ error: 'Erro ao criar postagem' }, { status: 500 });
+      createdPosts.push(newPost);
     }
-  });
-}
 
-// Método DELETE - deletar uma postagem (precisa de autenticação)
-export async function DELETE(req) {
-  return middleware (req, async () => {
-    const { id } = await req.json();
-    await connectMongo();
-
-    try {
-      const post = await Post.findOneAndDelete({ _id: id, author: req.user.userId });
-      if (!post) return NextResponse.json({ error: 'Postagem não encontrada' }, { status: 404 });
-      return NextResponse.json({ message: 'Postagem deletada com sucesso' });
-    } catch (error) {
-      return NextResponse.json({ error: 'Erro ao deletar postagem' }, { status: 500 });
-    }
-  });
+    return NextResponse.json(createdPosts);
+  } catch (error) {
+    console.error("Erro ao criar postagem:", error);
+    return NextResponse.json({ error: 'Erro ao criar postagem' }, { status: 500 });
+  }
 }

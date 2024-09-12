@@ -24,7 +24,7 @@ export default function PostsPage() {
     e.preventDefault();
     const token = localStorage.getItem('token');
 
-    const res = await fetch('/api/posts', {
+    const res = await fetch('/api/post', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -45,7 +45,7 @@ export default function PostsPage() {
   // Função para deletar uma postagem
   const handleDeletePost = async (id) => {
     const token = localStorage.getItem('token');
-    const res = await fetch(`/api/posts`, {
+    const res = await fetch(`/api/post`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
