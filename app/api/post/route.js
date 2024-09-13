@@ -3,7 +3,6 @@ import connectMongo from "@/utils/dbConnect";
 import { NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 
-// Função GET - Listar postagens
 export async function GET(req) {
   await connectMongo();
 
@@ -18,7 +17,6 @@ export async function GET(req) {
   }
 }
 
-// Função POST - Criar nova(s) postagem(ns)
 export async function POST(req) {
   await connectMongo();
 
@@ -33,7 +31,6 @@ export async function POST(req) {
     const requestBody = await req.json();
     console.log("Request Body:", requestBody);
 
-    // Extrair o token do cabeçalho Authorization
     const authHeader = req.headers.get('authorization');
     console.log("Authorization Header:", authHeader);
 
@@ -47,13 +44,11 @@ export async function POST(req) {
     let userId;
 
     try {
-      // Verifica o token e extrai o payload
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
       console.log("Decoded Token:", decoded);
-      userId = decoded.userId; // Obtém o ID do usuário do token
+      userId = decoded.userId;
     } catch (error) {
       console.error("Token Verification Error:", error);
-
       if (error.name === 'TokenExpiredError') {
         return NextResponse.json({ error: 'Token expirado' }, { status: 403 });
       } else if (error.name === 'JsonWebTokenError') {
@@ -76,7 +71,7 @@ export async function POST(req) {
       const newPost = new Post({
         title,
         content,
-        author: userId, // Usa o ID do usuário autenticado
+        author: userId,
       });
 
       await newPost.save();
