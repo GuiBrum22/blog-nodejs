@@ -1,24 +1,11 @@
 import mongoose from 'mongoose';
 
 const RatingSchema = new mongoose.Schema({
-  user: { 
-    type: mongoose.Schema.Types.ObjectId, 
-    ref: 'User', 
-    required: true 
-  },
-  stars: { 
-    type: Number, 
-    required: true, 
-    min: 1, 
-    max: 5 
-  },
-  post: { 
-    type: mongoose.Schema.Types.ObjectId, 
-    ref: 'Post', 
-    required: true 
-  },
-}, {
-  timestamps: true
+  post: { type: mongoose.Schema.Types.ObjectId, ref: 'Post', required: true },
+  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  stars: { type: Number, required: true, min: 1, max: 5 }, // Avaliação entre 1 e 5 estrelas
+  createdAt: { type: Date, default: Date.now }
 });
 
-export default mongoose.models.Rating || mongoose.model('Rating', RatingSchema);
+const Rating = mongoose.models.Rating || mongoose.model('Rating', RatingSchema);
+export default Rating;

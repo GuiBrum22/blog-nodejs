@@ -1,10 +1,12 @@
 import jwt from 'jsonwebtoken';
+import { NextResponse } from 'next/server';
 
-export const jwtMiddleware = (req, res, next) => {
+// Middleware para verificar JWT
+export function jwtMiddleware(req) {
   // Obter o token do header Authorization (Formato: "Bearer <token>")
-  const authHeader = req.headers.authorization;
+  const authHeader = req.headers.get('authorization');
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    return res.status(401).json({ message: 'Token não fornecido ou formato incorreto' });
+    return NextResponse.json({ message: 'Token não fornecido ou formato incorreto' }, { status: 401 });
   }
 
   const token = authHeader.split(' ')[1];
@@ -12,15 +14,16 @@ export const jwtMiddleware = (req, res, next) => {
   try {
     // Verifica o token e extrai o payload
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded; // Adiciona o payload decodificado ao req.user (ex: { id, username, etc. })
-    next(); // Continua para o próximo middleware ou controlador
+    // Adiciona o payload decodificado ao req.user (ou contexto de sessão)
+    req.user = decoded; // Pode ser necessário ajustar dependendo do seu uso
+    return NextResponse.next(); // Continua para o próximo middleware ou controlador
   } catch (error) {
     if (error.name === 'TokenExpiredError') {
-      return res.status(403).json({ message: 'Token expirado' });
+      return NextResponse.json({ message: 'Token expirado' }, { status: 403 });
     } else if (error.name === 'JsonWebTokenError') {
-      return res.status(403).json({ message: 'Token inválido' });
+      return NextResponse.json({ message: 'Token inválido' }, { status: 403 });
     } else {
-      return res.status(500).json({ message: 'Erro ao verificar o token' });
+      return NextResponse.json({ message: 'Erro ao verificar o token' }, { status: 500 });
     }
   }
-};
+}
