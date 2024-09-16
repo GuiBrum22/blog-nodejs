@@ -22,33 +22,29 @@ export async function POST(req) {
 
   try {
     const contentType = req.headers.get('content-type');
-    console.log("Content-Type:", contentType);
-
     if (!contentType || !contentType.includes('application/json')) {
       return NextResponse.json({ error: 'Content-Type deve ser application/json' }, { status: 400 });
     }
 
+    // Pega o corpo da requisição (dados do formulário)
     const requestBody = await req.json();
-    console.log("Request Body:", requestBody);
+    const { title, content, token } = requestBody;  // O token agora está no corpo da requisição
 
-    const authHeader = req.headers.get('authorization');
-    console.log("Authorization Header:", authHeader);
-
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      return NextResponse.json({ error: 'Token não fornecido ou formato incorreto' }, { status: 401 });
+    if (!title || !content) {
+      return NextResponse.json({ error: 'Título e conteúdo são obrigatórios' }, { status: 400 });
     }
 
-    const token = authHeader.split(' ')[1];
-    console.log("Token Extracted:", token);
+    if (!token) {
+      return NextResponse.json({ error: 'Token não fornecido' }, { status: 401 });
+    }
 
-    let userId;
+    let user;
 
     try {
+      // Decodifica o token JWT para verificar o usuário
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      console.log("Decoded Token:", decoded);
-      userId = decoded.userId;
+      user = decoded; // O token contém o `userId` ou `username`
     } catch (error) {
-      console.error("Token Verification Error:", error);
       if (error.name === 'TokenExpiredError') {
         return NextResponse.json({ error: 'Token expirado' }, { status: 403 });
       } else if (error.name === 'JsonWebTokenError') {
@@ -58,27 +54,16 @@ export async function POST(req) {
       }
     }
 
-    const posts = Array.isArray(requestBody) ? requestBody : [requestBody];
-    const createdPosts = [];
+    // Criação de uma nova postagem com o autor associado ao token
+    const newPost = new Post({
+      title,
+      content,
+      author: user.userId  // Assume que o `userId` está no token JWT
+    });
 
-    for (const post of posts) {
-      const { title, content } = post;
+    await newPost.save();
 
-      if (!title || !content) {
-        return NextResponse.json({ error: 'Título e conteúdo são obrigatórios' }, { status: 400 });
-      }
-
-      const newPost = new Post({
-        title,
-        content,
-        author: userId,
-      });
-
-      await newPost.save();
-      createdPosts.push(newPost);
-    }
-
-    return NextResponse.json(createdPosts);
+    return NextResponse.json(newPost);
   } catch (error) {
     console.error("Erro ao criar postagem:", error);
     return NextResponse.json({ error: 'Erro ao criar postagem' }, { status: 500 });

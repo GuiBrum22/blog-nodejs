@@ -13,8 +13,8 @@ export async function POST(req) {
       return NextResponse.json({ error: 'Content-Type deve ser application/json' }, { status: 400 });
     }
 
-    // Pega o token diretamente do corpo da requisição
-    const { token, stars } = await req.json();
+    // Extrair token, postId e estrelas do corpo da requisição
+    const { token, postId, stars } = await req.json();
     
     if (!token) {
       return NextResponse.json({ error: 'Token não fornecido' }, { status: 401 });
@@ -40,10 +40,10 @@ export async function POST(req) {
       return NextResponse.json({ error: 'A avaliação deve ser entre 1 e 5 estrelas' }, { status: 400 });
     }
 
-    // Buscar a postagem do autor autenticado
-    const post = await Post.findOne({ author: userId });
+    // Buscar a postagem pelo postId
+    const post = await Post.findById(postId);
     if (!post) {
-      return NextResponse.json({ error: 'Postagem não encontrada para o autor' }, { status: 404 });
+      return NextResponse.json({ error: 'Postagem não encontrada' }, { status: 404 });
     }
 
     // Verificar se o usuário já fez uma avaliação para esta postagem
@@ -52,18 +52,21 @@ export async function POST(req) {
       return NextResponse.json({ error: 'Você já avaliou esta postagem' }, { status: 400 });
     }
 
-    // Criar a nova avaliação
-    const rating = new Rating({
-      post: post._id,
-      user: userId,
-      stars,
-    });
+    // Adicionar a nova avaliação ao campo `ratings`
+    post.ratings.push({ user: userId, stars });
 
-    await rating.save();
+    // Recalcular a média das avaliações
+    const totalRatings = post.ratings.length;
+    const sumRatings = post.ratings.reduce((acc, rating) => acc + rating.stars, 0);
+    post.averageRating = sumRatings / totalRatings;
+
+    // Salvar a postagem atualizada
+    await post.save();
 
     return NextResponse.json({
-      rating,
-      ratingId: rating._id
+      message: "Avaliação adicionada com sucesso",
+      postId: post._id,
+      averageRating: post.averageRating
     });
   } catch (error) {
     console.error('Erro ao processar avaliação:', error);
