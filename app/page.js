@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import styles from './page.module.css';
 
@@ -12,9 +11,16 @@ export default function Home() {
 
   // Função para buscar postagens do banco de dados
   const fetchPosts = async () => {
-    const res = await fetch('/api/post'); // Endpoint da API que retorna as postagens
-    const data = await res.json();
-    setPosts(data);
+    try {
+      const res = await fetch('/api/post'); // Endpoint da API que retorna as postagens
+      if (!res.ok) {
+        throw new Error('Erro ao buscar postagens');
+      }
+      const data = await res.json();
+      setPosts(data);
+    } catch (error) {
+      console.error('Erro ao buscar postagens:', error);
+    }
   };
 
   useEffect(() => {
@@ -32,11 +38,14 @@ export default function Home() {
 
   const handleRateClick = (postId) => {
     if (postId) {
-      // Redireciona para a página de avaliação com o ID do post
-      router.push(`/rate?postId=${postId}`);
+      router.push(`/rate?postId=${postId}`); // Redireciona para a página de avaliação com o ID do post
     } else {
       console.error('Post ID is undefined');
     }
+  };
+
+  const handleAddPostClick = () => {
+    router.push('/post'); // Redireciona para a página de adicionar postagem
   };
 
   return (
@@ -51,8 +60,8 @@ export default function Home() {
           className={styles.searchBar}
         />
         <nav className={styles.nav}>
-          <a href="/login">Login</a>
-          <a href="/register">Registrar</a>
+          <a href="/login" className="primary">Login</a>
+          <a href="/register" className="secondary">Registrar</a>
           <button onClick={handleLogout} className={styles.logoutButton}>Logout</button>
         </nav>
       </header>
@@ -66,13 +75,13 @@ export default function Home() {
               post.title.toLowerCase().includes(searchTerm.toLowerCase())
             )
             .map((post) => (
-              <div key={post.id} className={styles.postContainer}>
+              <div key={post._id} className={styles.postContainer}>
                 <div className={styles.postContent}>
                   <h3>{post.title}</h3>
                   <p>{post.content}</p>
                   <button 
                     className={styles.rateButton}
-                    onClick={() => handleRateClick(post.id)}
+                    onClick={() => handleRateClick(post._id)}
                   >
                     Avaliar
                   </button>
@@ -81,6 +90,9 @@ export default function Home() {
             ))}
         </section>
       </main>
+
+      {/* Botão para adicionar nova postagem */}
+      <button onClick={handleAddPostClick} className={styles.addPostButton}>+</button>
 
       {/* Rodapé */}
       <footer className={styles.footer}>

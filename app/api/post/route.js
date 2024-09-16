@@ -4,15 +4,16 @@ import { NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 
 export async function GET(req) {
-  await connectMongo();
-
   try {
+    await connectMongo(); // Garante que a conexão com o MongoDB está estabelecida
+
     const posts = await Post.find()
                             .select('-createdAt') // Exclui o campo `createdAt`
-                            .populate('author', 'username');
+                            .populate('author', 'username'); // Popula o campo `author` com o `username`
+                            
     return NextResponse.json(posts);
   } catch (error) {
-    console.error("Erro ao buscar postagens:", error);
+    console.error("Erro ao buscar postagens:", error); // Loga o erro no console para debugging
     return NextResponse.json({ error: 'Erro ao buscar postagens' }, { status: 500 });
   }
 }
